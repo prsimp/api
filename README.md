@@ -126,7 +126,7 @@ Profiles are a user's presence on other websites (i.e. Github, Stack Overflow)
 
 ### User Facts
 User facts represent information about a user in one of the following categories:
-[Background and Recent Work](#background), [Why Harvest?](#harveset), and [Why Hire Me?](#hire).
+[Background and Recent Work](#background-and-recent-work-facts), [Why Harvest?](#why-harveset), and [Why Hire Me?](#why-hire-me).
 
 #### Get all the facts for a user
 <code>GET /users/:username/facts</code>
@@ -164,7 +164,7 @@ User facts represent information about a user in one of the following categories
         }
     }
 
-### <a id="background" href="#background">Background and Recent Work Facts</a>
+### Background and Recent Work Facts
 Background and Recent Work facts relate to my Computer Science background and to
 what I've been working on lately.
 #### Get all background and recent work facts
@@ -233,7 +233,7 @@ what I've been working on lately.
       ]
     }
 
-### <a id="harvest" href="#harvest">Why Harvest?</a>
+### Why Harvest?
 <code>GET /users/:username/whyharvest</code>
 ###### Response
     {
@@ -271,7 +271,7 @@ what I've been working on lately.
       ]
     }
 
-### <a id="hire" href="#hire">Why Hire Me?</a>
+### Why Hire Me?
 <code>GET /users/:username/whyhire</code>
 ###### Response
     {

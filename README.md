@@ -126,7 +126,7 @@ Profiles are a user's presence on other websites (i.e. Github, Stack Overflow)
 
 ### User Facts
 User facts represent information about a user in one of the following categories:
-[Background and Recent Work](#background-and-recent-work-facts), [Why Harvest?](#why-harveset), and [Why Hire Me?](#why-hire-me).
+[Background and Recent Work](#background-and-recent-work-facts), [Why Harvest?](#why-harvest), and [Why Hire Me?](#why-hire-me).
 
 #### Get all the facts for a user
 <code>GET /users/:username/facts</code>

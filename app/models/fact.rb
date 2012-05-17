@@ -8,7 +8,7 @@ class Fact < ActiveRecord::Base
   scope :no_random, where("fact_type != ?", "Random")
 
   def self.kind(fact_type)
-    where("fact_type == ?", fact_type)
+    where("fact_type = ?", fact_type)
   end
 
   def self.random

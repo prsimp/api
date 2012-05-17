@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="The Paul Simpson API : " />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>The Paul Simpson API</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/prsimp/api">View on GitHub</a>
+
+          <h1 id="project_title">The Paul Simpson API</h1>
+          <h2 id="project_tagline"></h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/prsimp/api/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/prsimp/api/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <p>An API for accessing information for my application as a Junior Rails Developer at <a href="http://www.getHarvest.com">Harvest</a>.</p>
+
+<h2>Introduction</h2>
+
+<p>I love APIs. I love them both for their systematic representation our data and for what they can become when used or combined in new and creative ways.</p>
+
+<p>I also love <a href="http://www.getHarvest.com">Harvest</a>. I have been watching them for months as I prepare to move to New York in June. The care they put into crafting their product, the open-minded and flexible approach they have to managing a distributed company, and the unwavering and vocal love of their users have made me certain that Harvest is the sort of place I want to work, learn, and grow as a developer.</p>
+
+<p>I built this API for Harvest in an attempt to display myself in a way that makes me happy and would show the fine folks at Harvest how serious I am about working with them. Enjoy!</p>
+
+<h4>Supported Data Formats</h4>
+
+<p>The Paul Simpson API supports both JSON and XML requests. The data-type to be returned can be specified in two ways: either by setting the <code>Accept</code> and <code>Content-type</code> headers in the request (<code>application/json</code> for JSON, <code>application/xml</code> for XML) or by adding the desired content-type to the end of a request (i.e. /users/prsimp.json). If no content-type is specified, JSON will be returned.</p>
+
+<h4>API Wrapper Libraries</h4>
+
+<p>Sadly, no wrapper libraries currently exist for The Paul Simpson API.</p>
+
+<h4>Contact Information</h4>
+
+<p>Questions, comments, concerns, outrage, requests for interviews, and/or offers of employment should be directed to <a href="mailto:prsimp@gmail.com">prsimp@gmail.com</a>.</p>
+
+<h2>Usage</h2>
+
+<p>The root URL for The Paul Simpson API is <code><a href="http://api.prsimp.com">http://api.prsimp.com</a></code>. All requests are sent using the <code>GET</code> method. Ruby-style symbols are used to represent variable information in an API call. For instance, <code>:username</code> should be replaced with the username of the desired user.</p>
+
+<h3>User Information</h3>
+
+<h4>Get basic biographical information about a user</h4>
+
+<p><code>GET /users/:username/whois</code></p>
+
+<h6>Response</h6>
+
+<pre><code>{
+  "name":"Paul Simpson",
+  "email":"prsimp@gmail.com",
+  "username":"prsimp",
+  "age":27,
+  "location":"Manhattan, Kansas",
+  "url":"http://api.prsimp.com/users/prsimp"
+}
+</code></pre>
+
+<h4>Get the full user record for a user</h4>
+
+<p><code>GET /users/:username</code></p>
+
+<h6>Response</h6>
+
+<pre><code>{
+  "name":"Paul Simpson",
+  "email":"prsimp@gmail.com",
+  "username":"prsimp",
+  "age":27,
+  "location":"Manhattan, Kansas",
+  "url":"http://api.prsimp.com/users/prsimp",
+  "whois_url":"http://api.prsimp.com/users/prsimp/whois",
+  "profiles":[
+    {
+      "site":"Github",
+      "username":"prsimp",
+      "profile_url":"https://github.com/prsimp/",
+      "url":"http://api.prsimp.com/users/prsimp/profiles/1"
+    },
+    {
+      ...
+    }
+  ],
+  "facts":[
+    {
+      "title":"Company Culture",
+      "body":"Harvest gives back to the OSS, local startup and international communities. This is important to me.",
+      "fact_type":"Harvest",
+      "url":"http://api.prsimp.com/users/prsimp/facts/1"
+    },
+    {
+      ...
+    }
+  ]
+}
+</code></pre>
+
+<h3>Profile Information</h3>
+
+<p>Profiles are a user's presence on other websites (i.e. Github, Stack Overflow)</p>
+
+<h4>Get all profiles for a user</h4>
+
+<p><code>GET /users/:username/profiles</code></p>
+
+<h6># Response</h6>
+
+<pre><code>{
+  "username":"prsimp",
+  "url":"http://api.prsimp.com/users/prsimp",
+  "profiles":[
+    {
+      "site":"Github",
+      "username":"prsimp",
+      "id": 1,
+      "profile_url":"https://github.com/prsimp/",
+      "url":"http://api.prsimp.com/users/prsimp/profiles/1"
+    },
+    {
+      "site":"StackOverflow",
+      "username":"Paul Simpson",
+      "id": 2,
+      "profile_url":"http://stackoverflow.com/users/1005071/paul-simpson",
+      "url":"http://api.prsimp.com/users/prsimp/profiles/2"
+    },
+    {
+      "site":"Twitter",
+      "username":"prsimp",
+      "id": 3,
+      "profile_url":"https://twitter.com/#!/prsimp",
+      "url":"http://api.prsimp.com/users/prsimp/profiles/3"
+    },
+    {
+      "site":"Last.fm",
+      "username":"parisim",
+      "id": 4,
+      "profile_url":"http://www.last.fm/user/parisim",
+      "url":"http://api.prsimp.com/users/prsimp/profiles/4"
+    }
+  ]
+}
+</code></pre>
+
+<h4>Get a single profile for a user</h4>
+
+<p><code>GET /users/:username/profiles/:id</code></p>
+
+<h6>Response</h6>
+
+<pre><code>{
+  "username":"prsimp",
+  "url":"http://api.prsimp.com/users/prsimp",
+  "profile":
+    {
+      "site":"Github",
+      "username":"prsimp",
+      "id": 1,
+      "profile_url":"https://github.com/prsimp/",
+      "url":"http://api.prsimp.com/users/prsimp/profiles/1"
+    }
+}
+</code></pre>
+
+<h3>User Facts</h3>
+
+<p>User facts represent information about a user in one of the following categories:
+<a href="#background-and-recent-work-facts">Background and Recent Work</a>, <a href="#why-harveset">Why Harvest?</a>, and <a href="#why-hire-me">Why Hire Me?</a>.</p>
+
+<h4>Get all the facts for a user</h4>
+
+<p><code>GET /users/:username/facts</code></p>
+
+<h6>Response</h6>
+
+<pre><code>{
+  "username":"prsimp",
+  "url":"http://api.prsimp.com/users/prsimp",
+  "facts":[
+    {
+      "fact_type":"Harvest",
+      "title":"Company Culture",
+      "body":"Harvest gives back to the OSS, local startup and international communities. This is important to me.",
+      "id": 1,
+      "url":"http://api.prsimp.com/users/prsimp/facts/1"
+    },
+    {
+      ...
+    }
+  ]
+}
+</code></pre>
+
+<h4>Get a single fact for a user</h4>
+
+<p><code>GET /users/:username/facts/:id</code></p>
+
+<h6>Response</h6>
+
+<pre><code>{
+  "username":"prsimp",
+  "url":"http://api.prsimp.com/users/prsimp",
+  "fact":
+    {
+      "fact_type":"Harvest",
+      "title":"Company Culture",
+      "body":"Harvest gives back to the OSS, local startup and international communities. This is important to me.",
+      "id":1,
+      "url":"http://api.prsimp.com/users/prsimp/facts/1"
+    }
+}
+</code></pre>
+
+<h3>Background and Recent Work Facts</h3>
+
+<p>Background and Recent Work facts relate to my Computer Science background and to
+what I've been working on lately.</p>
+
+<h4>Get all background and recent work facts</h4>
+
+<p><code>GET /users/:username/background</code></p>
+
+<h6>Response</h6>
+
+<pre><code>{
+  "username":"prsimp",
+  "url":"http://api.prsimp.com/users/prsimp",
+  "background":[
+    {
+      "title":"Formal Training",
+      "body":"AP Computer Science (C++) in high school.",
+      "id":11,
+      "url":"http://api.prsimp.com/users/prsimp/facts/11"
+    },
+    {
+      "title":"Formal Training",
+      "body":"Intro to Java and Programming Java courses from North Carolina State University Engineering Online Program",
+      "id":12,
+      "url":"http://api.prsimp.com/users/prsimp/facts/12"
+    },
+    {
+      "title":"Formal Training",
+      "body":"Discrete Mathematics course from North Carolina State University Engineering Online Program",
+      "id":13,
+      "url":"http://api.prsimp.com/users/prsimp/facts/13"
+    },
+    {
+      "title":"Self-Taught",
+      "body":"Basic Ruby knowledge",
+      "id":14,
+      "url":"http://api.prsimp.com/users/prsimp/facts/14"
+    },
+    {
+      "title":"Self-Taught",
+      "body":"Basic Rails knowledge",
+      "id":15,
+      "url":"http://api.prsimp.com/users/prsimp/facts/15"
+    },
+    {
+      "title":"Self-Taught",
+      "body":"Intermediate HTML and CSS knowledge",
+      "id":16,
+      "url":"http://api.prsimp.com/users/prsimp/facts/16"
+    }
+  ],
+  "recent":[
+    {
+      "title":"NYCorBUST",
+      "body":"Built a rails application for aggregating items we were selling on Craigslist in preparation for the move. Visible at http://www.nycorbust.com or on Github at http://github.com/prsimp/nycorbust",
+      "id":17,
+      "url":"http://api.prsimp.com/users/prsimp/facts/17"
+    },
+    {
+      "title":"US Army",
+      "body":"Spent the last almost 3.5 years serving as an Infantry Officer in the United States Army",
+      "id":18,
+      "url":"http://api.prsimp.com/users/prsimp/facts/18"
+    },
+    {
+      "title":"Paul Simpson API",
+      "body":"Built this sweet API to display myself",
+      "id":19,
+      "url":"http://api.prsimp.com/users/prsimp/facts/19"
+    }
+  ]
+}
+</code></pre>
+
+<h3>Why Harvest?</h3>
+
+<p><code>GET /users/:username/whyharvest</code></p>
+
+<h6>Response</h6>
+
+<pre><code>{
+  "username": "prsimp",
+  "url": "http://api.prsimp.com/users/prsimp",
+  "facts": [
+    {
+      "fact_type": "Harvest",
+      "title": "Company Culture",
+      "body": "Harvest gives back to the OSS, local startup and international communities. This is important to me.",
+      "id": 1,
+      "url": "http://api.prsimp.com/users/prsimp/facts/1"
+    },
+    {
+      "fact_type": "Harvest",
+      "title": "People Love It",
+      "body": "I want to build something that people love because it makes their lives better.",
+      "id": 2,
+      "url": "http://api.prsimp.com/users/prsimp/facts/2"
+    },
+    {
+      "fact_type": "Harvest",
+      "title": "Coworkers",
+      "body": "I want to work with people who are passionate about their craft, are honest, hard-working, and know how to enjoy work.",
+      "id": 3,
+      "url": "http://api.prsimp.com/users/prsimp/facts/3"
+    },
+    {
+      "fact_type": "Harvest",
+      "title": "Team Management",
+      "body": "I like the open-minded and flexible approach to managing a distributed company.",
+      "id": 4,
+      "url": "http://api.prsimp.com/users/prsimp/facts/4"
+    }
+  ]
+}
+</code></pre>
+
+<h3>Why Hire Me?</h3>
+
+<p><code>GET /users/:username/whyhire</code></p>
+
+<h6>Response</h6>
+
+<pre><code>{
+  "username": "prsimp",
+  "url": "http://api.prsimp.com/users/prsimp",
+  "facts": [
+    {
+      "fact_type": "Hire",
+      "title": "Hungry",
+      "body": "I am hungry to learn and grow as a developer.",
+      "id": 5,
+      "url": "http://api.prsimp.com/users/prsimp/facts/5"
+    },
+    {
+      "fact_type": "Hire",
+      "title": "Fast Learner",
+      "body": "I am smart and learn very rapidly.",
+      "id": 6,
+      "url": "http://api.prsimp.com/users/prsimp/facts/6"
+    },
+    {
+      "fact_type": "Hire",
+      "title": "Calm",
+      "body": "I've been trained to be comfortable in situations a bit out of my depth. On the job training often the best kind of experience.",
+      "id": 7,
+      "url": "http://api.prsimp.com/users/prsimp/facts/7"
+    },
+    {
+      "fact_type": "Hire",
+      "title": "Curious",
+      "body": "I like to figure out what makes things tick.",
+      "id": 8,
+      "url": "http://api.prsimp.com/users/prsimp/facts/8"
+    },
+    {
+      "fact_type": "Hire",
+      "title": "Problem Solver",
+      "body": "I am a natural problem solver",
+      "id": 9,
+      "url": "http://api.prsimp.com/users/prsimp/facts/9"
+    },
+    {
+      "fact_type": "Hire",
+      "title": "Team Player",
+      "body": "I love working with other people and communicate well.",
+      "id": 10,
+      "url": "http://api.prsimp.com/users/prsimp/facts/10"
+    }
+  ]
+}
+</code></pre>
+
+<h2>Contributing</h2>
+
+<ol>
+<li>Fork the repository</li>
+<li>Create a well-named branch for your changes.</li>
+<li>Hack away</li>
+<li>Send me a pull request!</li>
+</ol><h2>License</h2>
+
+<p>Copyright (c) 2012 Paul Simpson</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">The Paul Simpson API maintained by <a href="https://github.com/prsimp">prsimp</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-3657041-5");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+
+  </body>
+</html>

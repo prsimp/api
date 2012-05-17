@@ -9,6 +9,4 @@ Api::Application.routes.draw do
     match 'random' => 'facts#random', via: :get
     resources :facts, only: [:index, :show]
   end
-
-  root to: 'pages#index'
 end

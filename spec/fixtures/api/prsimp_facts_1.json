@@ -1,0 +1,11 @@
+{
+  "username": "prsimp",
+  "url": "http://www.example.com/users/prsimp",
+  "fact": {
+    "fact_type": "Harvest",
+    "title": "Company Culture",
+    "body": "Harvest gives back to the OSS, local startup and international communities. This is important to me.",
+    "id": 1,
+    "url": "http://www.example.com/users/prsimp/facts/1"
+  }
+}

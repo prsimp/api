@@ -1,0 +1,48 @@
+{
+  "username": "prsimp",
+  "url": "http://www.example.com/users/prsimp",
+  "facts": [
+    {
+      "fact_type": "Hire",
+      "title": "Hungry",
+      "body": "I am hungry to learn and grow as a developer.",
+      "id": 5,
+      "url": "http://www.example.com/users/prsimp/facts/5"
+    },
+    {
+      "fact_type": "Hire",
+      "title": "Fast Learner",
+      "body": "I am smart and learn very rapidly.",
+      "id": 6,
+      "url": "http://www.example.com/users/prsimp/facts/6"
+    },
+    {
+      "fact_type": "Hire",
+      "title": "Calm",
+      "body": "I've been trained to be comfortable in situations a bit out of my depth. On the job training often the best kind of experience.",
+      "id": 7,
+      "url": "http://www.example.com/users/prsimp/facts/7"
+    },
+    {
+      "fact_type": "Hire",
+      "title": "Curious",
+      "body": "I like to figure out what makes things tick.",
+      "id": 8,
+      "url": "http://www.example.com/users/prsimp/facts/8"
+    },
+    {
+      "fact_type": "Hire",
+      "title": "Problem Solver",
+      "body": "I am a natural problem solver",
+      "id": 9,
+      "url": "http://www.example.com/users/prsimp/facts/9"
+    },
+    {
+      "fact_type": "Hire",
+      "title": "Team Player",
+      "body": "I love working with other people and communicate well.",
+      "id": 10,
+      "url": "http://www.example.com/users/prsimp/facts/10"
+    }
+  ]
+}

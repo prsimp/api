@@ -1,0 +1,34 @@
+{
+  "username": "prsimp",
+  "url": "http://www.example.com/users/prsimp",
+  "profiles": [
+    {
+      "site": "Github",
+      "username": "prsimp",
+      "id": 1,
+      "profile_url": "https://github.com/prsimp/",
+      "url": "http://www.example.com/users/prsimp/profiles/1"
+    },
+    {
+      "site": "StackOverflow",
+      "username": "Paul Simpson",
+      "id": 2,
+      "profile_url": "http://stackoverflow.com/users/1005071/paul-simpson",
+      "url": "http://www.example.com/users/prsimp/profiles/2"
+    },
+    {
+      "site": "Twitter",
+      "username": "prsimp",
+      "id": 3,
+      "profile_url": "https://twitter.com/#!/prsimp",
+      "url": "http://www.example.com/users/prsimp/profiles/3"
+    },
+    {
+      "site": "Last.fm",
+      "username": "parisim",
+      "id": 4,
+      "profile_url": "http://www.last.fm/user/parisim",
+      "url": "http://www.example.com/users/prsimp/profiles/4"
+    }
+  ]
+}

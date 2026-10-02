@@ -1,8 +1,6 @@
-class User < ActiveRecord::Base
-  has_many :profiles, dependent: :destroy
-  has_many :facts, dependent: :destroy
-
-  attr_accessible :age, :email, :location, :name, :username
+class User < ApplicationRecord
+  has_many :profiles, -> { order(:id) }, dependent: :destroy
+  has_many :facts, -> { order(:id) }, dependent: :destroy
 
   EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 

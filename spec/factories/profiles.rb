@@ -1,7 +1,7 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :profile do
-    site        "Github"
-    username    "test"
-    profile_url "https://github.com/test/"
+    site        { "Github" }
+    username    { "test" }
+    profile_url { "https://github.com/test/" }
   end
 end

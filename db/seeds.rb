@@ -1,11 +1,11 @@
 def build_random_user
-  first_name = Faker::Name.first_name
-  last_name  = Faker::Name.last_name
+  first_name = FFaker::Name.first_name
+  last_name  = FFaker::Name.last_name
   name       = "#{first_name} #{last_name}"
   username   = (first_name[0..2] + last_name).gsub(/[^a-z]/i, '').downcase
   email      = "#{username}@example.com"
   age        = Random.new.rand(18..65)
-  location   = "#{Faker::Address.city}, #{Faker::AddressUS.state}"
+  location   = "#{FFaker::Address.city}, #{FFaker::AddressUS.state}"
 
   User.create!(name: name, username: username, email: email, age: age, location: location)
 end

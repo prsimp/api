@@ -1,12 +1,13 @@
-Api::Application.routes.draw do
-
-  resources :users, only: [:index, :show] do
-    match 'whois' => 'users#whois', via: :get
-    resources :profiles, only: [:index, :show]
-    match 'background' => 'facts#background', via: :get
-    match 'whyharvest' => 'facts#whyharvest', via: :get
-    match 'whyhire' => 'facts#whyhire', via: :get
-    match 'random' => 'facts#random', via: :get
-    resources :facts, only: [:index, :show]
+Rails.application.routes.draw do
+  defaults format: :json do
+    resources :users, only: [:index, :show] do
+      get 'whois' => 'users#whois'
+      resources :profiles, only: [:index, :show]
+      get 'background' => 'facts#background'
+      get 'whyharvest' => 'facts#whyharvest'
+      get 'whyhire' => 'facts#whyhire'
+      get 'random' => 'facts#random'
+      resources :facts, only: [:index, :show]
+    end
   end
 end

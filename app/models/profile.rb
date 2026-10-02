@@ -1,8 +1,6 @@
-class Profile < ActiveRecord::Base
-  belongs_to :user
-
-  attr_accessible :site, :profile_url, :username
+class Profile < ApplicationRecord
+  belongs_to :user, optional: true
 
   validates_presence_of :site, :profile_url, :username
-  validates :profile_url, format: { with: URI::regexp(%w(http https)) }
+  validates :profile_url, format: { with: URI::RFC2396_PARSER.make_regexp(%w(http https)) }
 end

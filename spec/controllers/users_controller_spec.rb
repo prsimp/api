@@ -1,56 +1,56 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe UsersController do
+RSpec.describe UsersController do
   render_views
 
   before do
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
   end
 
   describe "GET 'index'" do
     it "responds successfully" do
-      get :index
-      response.should be_success
+      get :index, format: :json
+      expect(response).to be_successful
     end
 
     it "returns an array of JSON users" do
-      get :index
+      get :index, format: :json
       result = JSON.parse(response.body).first
-      result["username"].should == @user.username
+      expect(result["username"]).to eq(@user.username)
     end
   end
 
   describe "GET 'show'" do
     it "responds successfully" do
-      get :show, id: @user.username
-      response.should be_success
+      get :show, params: { id: @user.username }, format: :json
+      expect(response).to be_successful
     end
 
     it "returns a single user" do
-      get :show, id: @user.username
+      get :show, params: { id: @user.username }, format: :json
       result = JSON.parse(response.body)
-      result["name"].should == @user.name
-      result["email"].should == @user.email
+      expect(result["name"]).to eq(@user.name)
+      expect(result["email"]).to eq(@user.email)
     end
   end
 
   describe "GET 'whois'" do
     it "responds successfully" do
-      get :whois, user_id: @user.username
-      response.should be_success
+      get :whois, params: { user_id: @user.username }, format: :json
+      expect(response).to be_successful
     end
 
     describe "returns only basic biographical info" do
       it "does not contain any profiles" do
-        get :whois, user_id: @user.username
+        get :whois, params: { user_id: @user.username }, format: :json
         result = JSON.parse(response.body)
-        result.should_not be_has_key("profiles")
+        expect(result).not_to have_key("profiles")
       end
 
       it "does not contain any facts" do
-        get :whois, user_id: @user.username
+        get :whois, params: { user_id: @user.username }, format: :json
         result = JSON.parse(response.body)
-        result.should_not be_has_key("facts")
+        expect(result).not_to have_key("facts")
       end
     end
   end

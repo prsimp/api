@@ -1,8 +1,6 @@
-class ApplicationController < ActionController::Base
-  protect_from_forgery
-
+class ApplicationController < ActionController::API
   rescue_from ActiveRecord::RecordNotFound, with: :rescue_not_found
-  rescue_from ActionView::TemplateError, with: :rescue_template_error
+  rescue_from ActionView::Template::Error, with: :rescue_template_error
 
   protected
 

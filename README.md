@@ -9,7 +9,7 @@ I also love [Harvest](http://www.getHarvest.com). I have been watching them for 
 I built this API for Harvest in an attempt to display myself in a way that makes me happy and would show the fine folks at Harvest how serious I am about working with them. Enjoy!
 
 #### Supported Data Formats
-The Paul Simpson API supports both JSON and XML requests. The data-type to be returned can be specified in two ways: either by setting the <code>Accept</code> and <code>Content-type</code> headers in the request (<code>application/json</code> for JSON, <code>application/xml</code> for XML) or by adding the desired content-type to the end of a request (i.e. /users/prsimp.json). If no content-type is specified, JSON will be returned.
+The Paul Simpson API returns JSON. Adding the content-type to the end of a request (i.e. /users/prsimp.json) is optional; if no content-type is specified, JSON will be returned.
 
 #### API Wrapper Libraries
 Sadly, no wrapper libraries currently exist for The Paul Simpson API.

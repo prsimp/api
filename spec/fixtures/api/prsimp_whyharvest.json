@@ -1,0 +1,34 @@
+{
+  "username": "prsimp",
+  "url": "http://www.example.com/users/prsimp",
+  "facts": [
+    {
+      "fact_type": "Harvest",
+      "title": "Company Culture",
+      "body": "Harvest gives back to the OSS, local startup and international communities. This is important to me.",
+      "id": 1,
+      "url": "http://www.example.com/users/prsimp/facts/1"
+    },
+    {
+      "fact_type": "Harvest",
+      "title": "People Love It",
+      "body": "I want to build something that people love because it makes their lives better.",
+      "id": 2,
+      "url": "http://www.example.com/users/prsimp/facts/2"
+    },
+    {
+      "fact_type": "Harvest",
+      "title": "Coworkers",
+      "body": "I want to work with people who are passionate about their craft, are honest, hard-working, and know how to enjoy work.",
+      "id": 3,
+      "url": "http://www.example.com/users/prsimp/facts/3"
+    },
+    {
+      "fact_type": "Harvest",
+      "title": "Team Management",
+      "body": "I like the open-minded and flexible approach to managing a distributed company.",
+      "id": 4,
+      "url": "http://www.example.com/users/prsimp/facts/4"
+    }
+  ]
+}

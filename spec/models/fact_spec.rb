@@ -1,35 +1,35 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Fact do
+RSpec.describe Fact do
   before do
-    @fact = FactoryGirl.build(:fact)
+    @fact = FactoryBot.build(:fact)
   end
 
   subject { @fact }
 
-  it { should be_valid }
-  it { should respond_to :fact_type }
-  it { should respond_to :title }
-  it { should respond_to :body }
+  it { is_expected.to be_valid }
+  it { is_expected.to respond_to :fact_type }
+  it { is_expected.to respond_to :title }
+  it { is_expected.to respond_to :body }
 
   describe "fact_type" do
     it "is required" do
       @fact.fact_type = nil
-      @fact.should_not be_valid
+      expect(@fact).not_to be_valid
     end
   end
 
   describe "title" do
     it "is required" do
       @fact.title = ""
-      @fact.should_not be_valid
+      expect(@fact).not_to be_valid
     end
   end
 
   describe "body" do
     it "is required" do
       @fact.body = ""
-      @fact.should_not be_valid
+      expect(@fact).not_to be_valid
     end
   end
 end

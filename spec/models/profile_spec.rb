@@ -36,5 +36,17 @@ RSpec.describe Profile do
       @profile.profile_url = "foo"
       expect(@profile).not_to be_valid
     end
+
+    it "accepts http and https urls" do
+      ["http://www.last.fm/user/parisim", "https://twitter.com/#!/prsimp"].each do |url|
+        @profile.profile_url = url
+        expect(@profile).to be_valid, "expected #{url} to be valid"
+      end
+    end
+
+    it "rejects other schemes" do
+      @profile.profile_url = "ftp://example.com/prsimp"
+      expect(@profile).not_to be_valid
+    end
   end
 end

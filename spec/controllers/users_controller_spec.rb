@@ -18,6 +18,13 @@ RSpec.describe UsersController do
       result = JSON.parse(response.body).first
       expect(result["username"]).to eq(@user.username)
     end
+
+    it "returns a 404 when there are no users" do
+      @user.destroy
+      get :index, format: :json
+      expect(response).to have_http_status(:not_found)
+      expect(JSON.parse(response.body)).to eq("error" => "Record could not be found")
+    end
   end
 
   describe "GET 'show'" do
@@ -32,12 +39,39 @@ RSpec.describe UsersController do
       expect(result["name"]).to eq(@user.name)
       expect(result["email"]).to eq(@user.email)
     end
+
+    it "returns a 404 for an unknown user" do
+      get :show, params: { id: "nobody" }, format: :json
+      expect(response).to have_http_status(:not_found)
+    end
+
+    it "leaves out profiles and facts when the user has none" do
+      get :show, params: { id: @user.username }, format: :json
+      result = JSON.parse(response.body)
+      expect(result).not_to have_key("profiles")
+      expect(result).not_to have_key("facts")
+    end
+
+    it "includes profiles and every fact except the random ones" do
+      @user.profiles.create!(site: "Github", username: "test", profile_url: "https://github.com/test/")
+      @user.facts.create!(fact_type: "Hire", title: "Hungry", body: "Hungry to learn")
+      @user.facts.create!(fact_type: "Random", title: "Vans", body: "Loves classic Vans")
+      get :show, params: { id: @user.username }, format: :json
+      result = JSON.parse(response.body)
+      expect(result["profiles"].map { |profile| profile["site"] }).to eq(["Github"])
+      expect(result["facts"].map { |fact| fact["title"] }).to eq(["Hungry"])
+    end
   end
 
   describe "GET 'whois'" do
     it "responds successfully" do
       get :whois, params: { user_id: @user.username }, format: :json
       expect(response).to be_successful
+    end
+
+    it "returns a 404 for an unknown user" do
+      get :whois, params: { user_id: "nobody" }, format: :json
+      expect(response).to have_http_status(:not_found)
     end
 
     describe "returns only basic biographical info" do

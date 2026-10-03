@@ -44,6 +44,14 @@ RSpec.describe User do
       duplicate_user.email = "something@example.com"
       expect(duplicate_user).not_to be_valid
     end
+
+    it "is unique regardless of case" do
+      @user.save
+      duplicate_user = @user.dup
+      duplicate_user.username = @user.username.upcase
+      duplicate_user.email = "something@example.com"
+      expect(duplicate_user).not_to be_valid
+    end
   end
 
   describe "email" do
@@ -57,10 +65,23 @@ RSpec.describe User do
       expect(@user).not_to be_valid
     end
 
+    it "accepts dots, plus signs and subdomains" do
+      @user.email = "first.last+harvest@mail.example.co.uk"
+      expect(@user).to be_valid
+    end
+
     it "is unique" do
       @user.save
       duplicate_user = @user.dup
       duplicate_user.username = "something"
+      expect(duplicate_user).not_to be_valid
+    end
+
+    it "is unique regardless of case" do
+      @user.save
+      duplicate_user = @user.dup
+      duplicate_user.username = "something"
+      duplicate_user.email = @user.email.upcase
       expect(duplicate_user).not_to be_valid
     end
   end
@@ -80,12 +101,43 @@ RSpec.describe User do
       @user.age = -42
       expect(@user).not_to be_valid
     end
+
+    it "is a whole number" do
+      @user.age = 27.5
+      expect(@user).not_to be_valid
+    end
   end
 
   describe "location" do
     it "is required" do
       @user.location = ""
       expect(@user).not_to be_valid
+    end
+  end
+
+  describe "associations" do
+    before do
+      @user.save!
+      @first_fact = @user.facts.create!(fact_type: "Hire", title: "Hungry", body: "Hungry to learn")
+      @second_fact = @user.facts.create!(fact_type: "Hire", title: "Calm", body: "Comfortable out of depth")
+      @first_profile = @user.profiles.create!(site: "Github", username: "test", profile_url: "https://github.com/test/")
+      @second_profile = @user.profiles.create!(site: "Twitter", username: "test", profile_url: "https://twitter.com/test")
+    end
+
+    # PostgreSQL writes an updated row to the end of the table, so without an
+    # explicit ORDER BY the first record would come back last.
+    it "returns facts in id order after an update" do
+      @first_fact.update!(body: "Hungry to learn and grow")
+      expect(@user.reload.facts).to eq([@first_fact, @second_fact])
+    end
+
+    it "returns profiles in id order after an update" do
+      @first_profile.update!(username: "prsimp")
+      expect(@user.reload.profiles).to eq([@first_profile, @second_profile])
+    end
+
+    it "destroys facts and profiles along with the user" do
+      expect { @user.destroy }.to change(Fact, :count).by(-2).and change(Profile, :count).by(-2)
     end
   end
 end

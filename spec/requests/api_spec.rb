@@ -88,4 +88,9 @@ RSpec.describe "The Paul Simpson API" do
     get "/users/prsimp", headers: { "Accept" => "text/html,application/xhtml+xml,*/*;q=0.8" }
     expect(json).to eq(golden("prsimp"))
   end
+
+  it "no longer serves XML" do
+    get "/users/prsimp.xml"
+    expect(response).to have_http_status(:not_acceptable)
+  end
 end

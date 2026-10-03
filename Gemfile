@@ -14,3 +14,7 @@ group :development, :test do
   gem "factory_bot_rails", "~> 6.5"
   gem "rspec-rails", "~> 8.0"
 end
+
+group :test do
+  gem "rspec_junit_formatter", "~> 0.6", require: false
+end

@@ -1,0 +1,127 @@
+# Build, test and publish the API image.
+#
+#   test ────────┐
+#                ├─► push-image   (main only, ghcr context)
+#   build-image ─┘
+#
+# build-image builds the production image, smoke-tests it against a
+# throwaway PostgreSQL and persists it to the workspace. push-image loads
+# that exact image and publishes it to ghcr.io, so nothing is pushed unless
+# both the test suite and the smoke test passed.
+version: 2.1
+
+executors:
+  # Steps run in the first image; PostgreSQL runs alongside it on localhost.
+  ruby-with-postgres:
+    docker:
+      - image: cimg/ruby:4.0.6
+      - image: postgres:17-alpine
+        environment:
+          POSTGRES_USER: api
+          POSTGRES_PASSWORD: api
+          POSTGRES_DB: api_test
+    environment:
+      RAILS_ENV: test
+      DATABASE_URL: postgres://api:api@localhost:5432/api_test
+      BUNDLE_PATH: vendor/bundle
+
+  # A full VM with its own Docker daemon for building and running images.
+  docker-vm:
+    machine:
+      image: ubuntu-2404:current
+    resource_class: medium
+
+jobs:
+  test:
+    executor: ruby-with-postgres
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - gems-v1-{{ checksum "Gemfile.lock" }}
+      - run:
+          name: Install gems
+          command: bundle install --jobs 4
+      - save_cache:
+          key: gems-v1-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+      - run:
+          name: Wait for PostgreSQL
+          command: |
+            for _ in $(seq 1 60); do
+              (echo > /dev/tcp/localhost/5432) 2>/dev/null && exit 0
+              sleep 1
+            done
+            echo "PostgreSQL did not start"; exit 1
+      - run:
+          name: Load the schema
+          command: bin/rails db:schema:load
+      - run:
+          name: Run specs
+          command: |
+            bundle exec rspec \
+              --format progress \
+              --format RspecJunitFormatter --out test-results/rspec.xml
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: test-results
+          destination: test-results
+
+  build-image:
+    executor: docker-vm
+    steps:
+      - checkout
+      - run:
+          name: Build the production image
+          command: |
+            docker build \
+              --build-arg VERSION="${CIRCLE_SHA1}" \
+              --tag "api:${CIRCLE_SHA1}" \
+              .
+      - run:
+          name: Smoke-test the image
+          command: scripts/smoke-test.sh "api:${CIRCLE_SHA1}"
+      - run:
+          name: Save the image to the workspace
+          command: |
+            mkdir -p dist
+            docker save "api:${CIRCLE_SHA1}" | gzip > dist/image.tar.gz
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist
+
+  push-image:
+    executor: docker-vm
+    environment:
+      IMAGE: ghcr.io/prsimp/api
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Load the tested image
+          command: gunzip -c dist/image.tar.gz | docker load
+      - run:
+          name: Log in to ghcr.io
+          command: echo "${GHCR_TOKEN}" | docker login ghcr.io --username "${GHCR_USERNAME}" --password-stdin
+      - run:
+          name: Push to ghcr.io
+          command: |
+            for tag in "${CIRCLE_SHA1}" latest; do
+              docker tag "api:${CIRCLE_SHA1}" "${IMAGE}:${tag}"
+              docker push "${IMAGE}:${tag}"
+            done
+
+workflows:
+  build-test-push:
+    jobs:
+      - test
+      - build-image
+      - push-image:
+          requires: [test, build-image]
+          context: ghcr
+          filters:
+            branches:
+              only: main
